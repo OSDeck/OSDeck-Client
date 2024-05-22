@@ -1,17 +1,36 @@
 #include <Arduino.h>
 #include "ComHandler.h"
+#include "Display.h"
+#include "TouchScreen.h"
+
+#define DISPLAY_CS 10
+#define INT 4
+#define WAKE 5
 
 ComHandler comHandler(115200);
 
 // put function declarations here:
 void processMessage();
 
+Display* display = nullptr;
+TouchScreen* touch = nullptr;
+
 void setup() {
+  display = new Display(DISPLAY_CS);
+  touch = new TouchScreen(INT, WAKE);
 }
 
 void loop() {
   // Check for incoming messages and process them
   processMessage();
+
+  if (digitalRead(INT) == HIGH) {
+    TouchData* t = touch->readTouch();
+    if(t != nullptr) {
+      Serial.write(t[0].posX);
+      Serial.write('\n');
+    }
+  }
 }
 
 // Function to process incoming messages
