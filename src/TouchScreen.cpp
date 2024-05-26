@@ -3,20 +3,26 @@
 TouchScreen::TouchScreen(int INT, int WAKE) {
   TS = new GSL1680();
   TS->begin(WAKE, INT);
+  data = new TouchData[1];
 }
 
 struct TouchData* TouchScreen::readTouch() {
-  if(TS->dataread() == 0) {
-    return nullptr;
-  }
+  delete[] data;
   int touchpoints = TS->dataread();
-  TouchData* data[touchpoints - 1];
+
+  if(touchpoints == 0) {
+    data = nullptr;
+    return data;
+  }
+
+  data = new TouchData[touchpoints];
 
   for(int i = 0; i < touchpoints; i++) {
-    data[i]->fingerIndex = TS->readFingerID(i);
-    data[i]->posX = TS->readFingerX(i);
-    data[i]->posY = TS->readFingerY(i);
+    data[i].fingerIndex = TS->readFingerID(i);
+    data[i].posX = TS->readFingerX(i);
+    data[i].posY = TS->readFingerY(i);
+    data[i].touchPoints = touchpoints;
   }
 
-  return *data;
+  return data;
 }

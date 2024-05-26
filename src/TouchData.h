@@ -5,6 +5,7 @@ struct TouchData {
   int posX;
   int posY;
   int fingerIndex;
+  int touchPoints;
 };
 
 #endif

@@ -7,6 +7,7 @@
 class TouchScreen {
   private:
     GSL1680* TS;
+    TouchData* data;
   public:
     TouchScreen(int INT, int WAKE);
     struct TouchData* readTouch();
