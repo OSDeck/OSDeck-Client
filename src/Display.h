@@ -13,7 +13,7 @@ class Display {
     void drawRectangle(int x, int y, int width, int height, int color);
     void drawCircle(int x, int y, int radius, int color);
     void drawText(int x, int y, int size, char* text, int color);
-    void drawImage(uint32_t imageData[150000], int x, int y);
+    void drawImage(uint32_t imageData[150000], int x, int y, int width);
 };
 
 #endif

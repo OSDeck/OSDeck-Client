@@ -17,6 +17,7 @@ Display* display = nullptr;
 TouchScreen* touch = nullptr;
 
 void setup() {
+  Serial.print("Teahgoihöehag");
   display = new Display(DISPLAY_CS);
   touch = new TouchScreen(INT, WAKE);
   delay(1000);

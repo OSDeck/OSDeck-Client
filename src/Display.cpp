@@ -24,6 +24,6 @@ void Display::drawText(int x, int y, int size, char* text, int color) {
   tft->print(text);
 }
 
-void Display::drawImage(uint32_t *imageData, int x, int y) {
+void Display::drawImage(uint32_t *imageData, int x, int y, int width) {
   
 }
