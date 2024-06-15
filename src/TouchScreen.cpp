@@ -7,7 +7,7 @@ TouchScreen::TouchScreen(int INT, int WAKE) {
 }
 
 struct TouchData* TouchScreen::readTouch() {
-  delete[] data;
+  delete data;
   int touchpoints = TS->dataread();
 
   if(touchpoints == 0) {
