@@ -27,3 +27,46 @@ bool ComHandler::receiveData(JsonDocument& doc) {
     }
     return false;
 }
+
+// Method to establish connection (handshake)
+bool ComHandler::Connect() {
+    const String handshakeRequest = "PC_HANDSHAKE";
+    const String handshakeResponse = "ARDUINO_HANDSHAKE";
+
+    // Wait for handshake from PC
+    while (true) {
+        if (Serial.available()) {
+            String incomingMessage = Serial.readStringUntil('\n');
+            if (incomingMessage == handshakeRequest) {
+                Serial.println(handshakeResponse);  // Send acknowledgment
+                return true;
+            }
+        }
+    }
+}
+
+// Function to receive and process JSON data
+bool ComHandler::receiveAndProcessJson(std::vector<ScreenObject>& screenObjects) {
+    unsigned long startTime = millis();
+    const unsigned long timeout = 1000;  // 1-second timeout
+
+    while (millis() - startTime < timeout) {
+        if (Serial.available()) {
+            String jsonString = Serial.readStringUntil('\n');
+            if (jsonString == "END") {
+                Serial.println("End of JSON transmission.");
+                return false;
+            }
+            JsonParser::parseAndAddScreenObject(jsonString, screenObjects);
+            return true;
+        }
+    }
+
+    Serial.println("Timeout waiting for data.");
+    return true; 
+}
+
+void ComHandler::sendEvent(ScreenObject obj){
+    Serial.println("EVENT");
+    sendData(JsonParser::EventJson(obj));
+}

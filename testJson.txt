@@ -1,0 +1,3 @@
+{"config":"{\"globalId\":0,\"objType\":4,\"Position\":{\"x\":300,\"y\":300},\"Properties\":{\"SizeX\":100,\"SizeY\":100,\"Color\":63488,\"SecondaryColor\":65535}}"}
+{"config":"{\"globalId\":1,\"objType\":9,\"Position\":{\"x\":50,\"y\":100},\"Properties\":{\"SizeX\":200,\"SizeY\":200,\"Color\":63488,\"SecondaryColor\":65535,\"value\":50}}"}
+{"config":"{\"globalId\":2,\"objType\":10,\"Position\":{\"x\":100,\"y\":200},\"Properties\":{\"SizeX\":200,\"SizeY\":200,\"Color\":1599,\"SecondaryColor\":63503,\"value\":50}}"}

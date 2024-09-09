@@ -24,6 +24,13 @@ void Display::drawText(int x, int y, int size, const char* text, int color) {
   tft->print(text);
 }
 
+void Display::drawTextAutoCenter(int x, int y, int size, const char* text, int color) {
+  tft->setFontScale(size);
+  tft->setTextColor(color);
+  tft->setCursor(x, y,true);
+  tft->print(text);
+}
+
 void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int size) {
   uint16_t pixels[width];
 
@@ -34,3 +41,136 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
     tft->drawPixels(pixels,width,x,col+y);
   }
 }
+
+    void Display::drawButton(int x, int y, int width,int height, int color,int secondaryColor, bool pressed){
+        drawRectangle(x, y, width, height, color);
+
+        double innerSizefactorX = 0.1 * width;
+        double innerSizefactorY = 0.1 * height;
+
+        if (pressed)
+        {
+          innerSizefactorX *= 2;
+          innerSizefactorY *= 2;
+        }
+
+        drawRectangle(x + innerSizefactorX,y + innerSizefactorY, width - 2*innerSizefactorX, height - 2*innerSizefactorY, secondaryColor);
+
+    }
+
+
+    void Display::drawButtonWithText(int x, int y, int with, int height ,int textSize,int color,int secondaryColor,int textColor, const char* text, bool pressed){
+        drawRectangle(x, y, with, height, color);
+
+        double innerSizefactorX = 0.1 * with;
+        double innerSizefactorY = 0.1 * height;
+        if (pressed)
+        {
+          innerSizefactorX *= 2;
+          innerSizefactorY *= 2;
+        }
+
+        drawRectangle(x + innerSizefactorX,y + innerSizefactorY, with - 2*innerSizefactorX, height - 2*innerSizefactorY, 0x4208);
+
+        drawTextAutoCenter(x + with/2,y+height/2,textSize,text,textColor);
+    }
+    void Display::drawButtonWithImage(int x, int y, int size ,int color, const uint32_t* imageData, bool pressed){
+      drawRectangle(x, y, size, size, color);
+
+      double innerSizefactor = 0.1 * size;
+
+      if (pressed)
+      {
+        innerSizefactor *= 2;
+      }
+
+      drawImage(imageData,x + innerSizefactor,y + innerSizefactor, size - 2*innerSizefactor, size - 2*innerSizefactor);
+ 
+    }
+    void Display::drawSliderHorizontal(int x, int y, int size, int color,int secondColor, int value){
+      double heightSled = 20;
+      double widthSled = 20;
+
+      double actualSledDistance = size-widthSled;
+
+
+      drawRectangle(x, y, size , heightSled, secondColor);
+
+
+      drawRectangle(x+ actualSledDistance/ 100 * value, y , widthSled , heightSled, color);
+    }
+    void Display::drawSliderVertical(int x, int y, int size, int color,int secondColor, int value){
+      double heightSled = 20;
+      double widthSled = 20;
+
+      double actualSledDistance = size-widthSled;
+
+      Serial.println(value); 
+      
+      drawRectangle(x, y, heightSled, size, secondColor);
+
+      drawRectangle(x, y + actualSledDistance/ 100 * value, widthSled , heightSled, color);
+    }
+
+
+    void Display::drawDisplayObject(ScreenObject obj){
+      switch (obj.objType)
+      {
+      case 0: //text
+        drawText(obj.posX,obj.posY,obj.sizeX,obj.text,obj.color);
+        break;
+      
+      case 1:// rectangle
+        drawRectangle(obj.posX,obj.posY,obj.sizeX,obj.sizeY,obj.color);
+        break;
+
+      case 2: //circle
+        drawCircle(obj.posX,obj.posY,obj.sizeX,obj.color);
+        break;
+
+      case 3: //image
+        drawImage(obj.imageData,obj.posX,obj.posY,obj.sizeX,obj.sizeY);
+        break;
+
+      case 4: //button Rectnangle
+          drawButton(obj.posX,obj.posY,obj.sizeX,obj.sizeY,obj.color,obj.secondaryColor,obj.touched);
+        break;
+
+      case 5: //button Rectangle with Image
+          drawButtonWithImage(obj.posX,obj.posY,obj.sizeX,obj.color,obj.imageData,obj.touched);
+        break;
+
+      case 6: //button Rectangle with Text
+        drawButtonWithText(obj.posX,obj.posY,obj.sizeX,obj.sizeY,obj.textSize,obj.color,obj.secondaryColor,obj.textColor,obj.text,obj.touched);
+        break;
+      
+      case 7://button Circle
+          //TODO Button circle
+        break;
+
+      case 8: //button Circle with Text
+          //TODO Button circle with text
+        break;
+
+      case 9: //slider Vertical
+        drawSliderVertical(obj.posX,obj.posY,obj.sizeX,obj.color,obj.secondaryColor,obj.value);
+        break;
+
+      case 10: //slider Horizontal
+        drawSliderHorizontal(obj.posX,obj.posY,obj.sizeX,obj.color,obj.secondaryColor,obj.value);
+        break;
+      
+      default:
+        break;
+      }
+    }
+
+  void Display::drawAllScreenObjects(std::vector<ScreenObject> objs){
+     Serial.println(objs.size());
+    for (int i = 0; i < objs.size(); i++)
+    {
+        drawDisplayObject(objs[i]);
+    }
+}
+
+
