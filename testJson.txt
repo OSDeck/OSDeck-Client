@@ -1,6 +1,6 @@
 {"config":"{\"globalId\":3,\"objType\":4,\"Position\":{\"x\":300,\"y\":300},\"Properties\":{\"SizeX\":100,\"SizeY\":100,\"Color\":63488,\"SecondaryColor\":65535}}"}
 {"config":"{\"globalId\":4,\"objType\":9,\"Position\":{\"x\":50,\"y\":100},\"Properties\":{\"SizeX\":200,\"SizeY\":200,\"Color\":63488,\"SecondaryColor\":65535,\"value\":50}}"}
 {"config":"{\"globalId\":5,\"objType\":10,\"Position\":{\"x\":100,\"y\":200},\"Properties\":{\"SizeX\":200,\"SizeY\":200,\"Color\":1599,\"SecondaryColor\":63503,\"value\":50}}"}
-{"config":"{\"globalId\":6,\"objType\":6,\"Position\":{\"x\":300,\"y\":400},\"Properties\":{\"SizeX\":100,\"SizeY\":100,\"Color\":65472,\"SecondaryColor\":30767,\"Text\":TestText,\"TextColor\":0,\"TextSize\":10}}"}
+{"config":"{\"globalId\":6,\"objType\":6,\"Position\":{\"x\":300,\"y\":400},\"Properties\":{\"SizeX\":100,\"SizeY\":100,\"Color\":65472,\"SecondaryColor\":30767,\"Text\":\"TestText\",\"TextColor\":0,\"TextSize\":10}}"}
 {"config":"{\"globalId\":7,\"objType\":7,\"Position\":{\"x\":300,\"y\":500},\"Properties\":{\"SizeX\":100,\"Color\":65472,\"SecondaryColor\":30767}}"}
-{"config":"{\"globalId\":7,\"objType\":8,\"Position\":{\"x\":300,\"y\":500},\"Properties\":{\"SizeX\":100,\"Color\":64352,\"SecondaryColor\":30767,\"Text\":TestText,\"TextColor\":38281,\"TextSize\":10}}"}
+{"config":"{\"globalId\":7,\"objType\":8,\"Position\":{\"x\":300,\"y\":500},\"Properties\":{\"SizeX\":100,\"Color\":64352,\"SecondaryColor\":30767,\"Text\":\"TestText\",\"TextColor\":38281,\"TextSize\":10}}"}

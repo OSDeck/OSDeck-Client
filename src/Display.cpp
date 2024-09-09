@@ -67,7 +67,7 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
           innerSizefactorRadius *= 2;
         }
 
-        drawCircle(x + radius,y + radius, radius - innerSizefactorRadius, secondaryColor);
+        drawCircle(x + radius,y + radius, radius - 2*innerSizefactorRadius, secondaryColor);
 
     }
     void Display::drawButtonCircleWithText(int x, int y, int radius ,int textSize,int color,int secondaryColor,int textColor, const char* text, bool pressed){
@@ -80,7 +80,7 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
           innerSizefactorRadius *= 2;
         }
 
-        drawCircle(x + radius,y + radius, radius - innerSizefactorRadius, secondaryColor);
+        drawCircle(x + radius,y + radius, radius -  2*innerSizefactorRadius, secondaryColor);
         drawTextAutoCenter(x + radius,y+radius,textSize,text,textColor);
 
     }
