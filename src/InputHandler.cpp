@@ -13,8 +13,20 @@ void InputHandler::handleTouch(TouchScreen* touch, Display* display, std::vector
                 if(objs[j].objType <= 3){
                     continue;
                 }
-                else if(objs[j].objType <= 8){//check if button
+                else if(objs[j].objType <= 6){//check if button
                     if (objs[j].posX < data[i].posX and objs[j].posX + objs[j].sizeX > data[i].posX and objs[j].posY < data[i].posY and objs[j].posY + objs[j].sizeY > data[i].posY)
+                    {
+                        if(!objs[j].touched){
+                            objs[j].touched = true;
+                            display->drawDisplayObject(objs[j]);
+                        }
+
+                        objs[j].ciclesSinceLastTouch = 0;
+                    }  
+                }
+                else if(objs[j].objType <= 8){//check if button Circle
+                    if (sqrt((objs[j].posX - data[i].posX) * (objs[j].posX - data[i].posX) +
+                             (objs[j].posY - data[i].posY) * (objs[j].posY - data[i].posY)) <= objs[j].sizeX)
                     {
                         if(!objs[j].touched){
                             objs[j].touched = true;
