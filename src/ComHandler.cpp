@@ -54,7 +54,6 @@ bool ComHandler::receiveAndProcessJson(std::vector<ScreenObject>& screenObjects)
         if (Serial.available()) {
             String jsonString = Serial.readStringUntil('\n');
             if (jsonString == "END") {
-                Serial.println("End of JSON transmission.");
                 return false;
             }
             JsonParser::parseAndAddScreenObject(jsonString, screenObjects);
@@ -62,7 +61,6 @@ bool ComHandler::receiveAndProcessJson(std::vector<ScreenObject>& screenObjects)
         }
     }
 
-    Serial.println("Timeout waiting for data.");
     return true; 
 }
 
@@ -70,3 +68,4 @@ void ComHandler::sendEvent(ScreenObject obj){
     Serial.println("EVENT");
     sendData(JsonParser::EventJson(obj));
 }
+

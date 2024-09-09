@@ -99,3 +99,26 @@ void InputHandler::handleTouch(TouchScreen* touch, Display* display, std::vector
     }
 
 }
+
+void InputHandler::handleRotary(std::vector<RotaryEncoder>& rotarys,ComHandler& com){
+
+    for (int i = 0; i < rotarys.size(); i++)
+    {
+        int movement = rotarys[i].checkRotation();
+
+        if(movement != 0){
+            ScreenObject obj;
+            obj.globalId = rotarys[i].getId();
+            obj.value = movement;
+            com.sendEvent(obj);
+        }
+
+        if(rotarys[i].isButtonPressed()){
+            ScreenObject obj;
+            obj.globalId = rotarys[i].getId();
+            obj.value = 2;
+            com.sendEvent(obj);
+        }
+    }
+
+}

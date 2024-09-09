@@ -8,6 +8,7 @@
 #include "TouchScreen.h"
 #include "Display.h"
 #include "ComHandler.h"
+#include "RotaryManager.h"
 
 class ComHandler;
 
@@ -16,6 +17,7 @@ class InputHandler {
 
   public:
      static void handleTouch(TouchScreen* touch, Display* display, std::vector<ScreenObject>& objs, ComHandler& com);
+     static void handleRotary(std::vector<RotaryEncoder>& rotarys,ComHandler& com);
     
 };
 

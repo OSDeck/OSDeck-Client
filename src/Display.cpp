@@ -57,6 +57,33 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
         drawRectangle(x + innerSizefactorX,y + innerSizefactorY, width - 2*innerSizefactorX, height - 2*innerSizefactorY, secondaryColor);
 
     }
+    void Display::drawButtonCircle(int x, int y, int radius, int color,int secondaryColor, bool pressed){
+        drawCircle(x + radius, y + radius, radius , color);
+
+        double innerSizefactorRadius = 0.1 * radius;
+
+        if (pressed)
+        {
+          innerSizefactorRadius *= 2;
+        }
+
+        drawCircle(x + radius,y + radius, radius - innerSizefactorRadius, secondaryColor);
+
+    }
+    void Display::drawButtonCircleWithText(int x, int y, int radius ,int textSize,int color,int secondaryColor,int textColor, const char* text, bool pressed){
+        drawCircle(x + radius, y + radius, radius , color);
+
+        double innerSizefactorRadius = 0.1 * radius;
+
+        if (pressed)
+        {
+          innerSizefactorRadius *= 2;
+        }
+
+        drawCircle(x + radius,y + radius, radius - innerSizefactorRadius, secondaryColor);
+        drawTextAutoCenter(x + radius,y+radius,textSize,text,textColor);
+
+    }
 
 
     void Display::drawButtonWithText(int x, int y, int with, int height ,int textSize,int color,int secondaryColor,int textColor, const char* text, bool pressed){
@@ -104,8 +131,6 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
       double widthSled = 20;
 
       double actualSledDistance = size-widthSled;
-
-      Serial.println(value); 
       
       drawRectangle(x, y, heightSled, size, secondColor);
 
@@ -145,11 +170,11 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
         break;
       
       case 7://button Circle
-          //TODO Button circle
+          drawButtonCircle(obj.posX,obj.posY,obj.sizeX,obj.color,obj.secondaryColor,obj.touched);
         break;
 
       case 8: //button Circle with Text
-          //TODO Button circle with text
+          drawButtonCircleWithText(obj.posX,obj.posY,obj.sizeX,obj.textSize,obj.color,obj.secondaryColor,obj.textColor,obj.text,obj.touched);
         break;
 
       case 9: //slider Vertical
@@ -166,7 +191,6 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
     }
 
   void Display::drawAllScreenObjects(std::vector<ScreenObject> objs){
-     Serial.println(objs.size());
     for (int i = 0; i < objs.size(); i++)
     {
         drawDisplayObject(objs[i]);

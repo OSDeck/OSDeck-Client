@@ -15,7 +15,7 @@ struct ScreenObject {
     int sizeY;
     int color;
     int secondaryColor;
-    const uint32_t* imageData;
+    uint32_t* imageData;
     int value;
     bool touched;
     int ciclesSinceLastTouch;

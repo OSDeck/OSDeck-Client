@@ -1,6 +1,7 @@
 #include "JsonParser.h"
 
 
+
 JsonDocument JsonParser::parseTouchData(struct TouchData* touchData[]) {
     JsonDocument doc;
     //doc[""]
@@ -86,13 +87,33 @@ void JsonParser::parseAndAddScreenObject(String& jsonString, std::vector<ScreenO
         screenObj.secondaryColor = -1;  // Default value
     }
 
-    if (innerDoc["Properties"].containsKey("Image")) {
-        String base64Image = innerDoc["Properties"]["Image"];
-        // Decode the Base64 string (implementation needed)
-        screenObj.imageData = nullptr; // This line should be updated when decoding is implemented
+if (innerDoc["Properties"].containsKey("Image")) {
+    String base64Image = innerDoc["Properties"]["Image"];
+    size_t decodedLength = 0;
+
+    // Allocate buffer for the decoded data (worst case size for base64 is 3/4 of the original size)
+    size_t imageDataLength = (base64Image.length() * 3) / 4;
+    uint8_t* byteData = (uint8_t*)malloc(imageDataLength);
+
+    // Decode the base64 string
+    int ret = mbedtls_base64_decode(byteData, imageDataLength, &decodedLength, (const unsigned char*)base64Image.c_str(), base64Image.length());
+
+    if (ret == 0) {
+        // Convert byte array to uint32_t array if needed
+        int numPixels = decodedLength / sizeof(uint32_t);
+        screenObj.imageData = new uint32_t[numPixels];
+        memcpy(screenObj.imageData, byteData, decodedLength);
     } else {
+        Serial.println("Base64 decoding failed");
         screenObj.imageData = nullptr;
     }
+
+    // Clean up
+    free(byteData);
+} else {
+    screenObj.imageData = nullptr;
+}
+
 
     // Add the new ScreenObject to the list
     screenObjects.push_back(screenObj);

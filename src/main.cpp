@@ -6,6 +6,7 @@
 #include "JsonParser.h"
 #include "ScreenObject.h"
 #include "InputHandler.h"
+#include "RotaryManager.h"
 #include <vector>
 
 #define DISPLAY_CS 10
@@ -24,6 +25,10 @@ TouchScreen* touch = nullptr;
 //list of all objects currently on screen
  std::vector<ScreenObject> screenObjs;
 
+//list of all rotary encoders
+std::vector<RotaryEncoder> rotaryEncders;
+
+
 
 void setup() {
   display = new Display(DISPLAY_CS);
@@ -33,7 +38,9 @@ void setup() {
         // Wait for Serial to initialize
     }
 
-    
+    rotaryEncders.push_back(RotaryEncoder(0,42,41,40));
+    rotaryEncders.push_back(RotaryEncoder(1,38,37,36));
+    rotaryEncders.push_back(RotaryEncoder(2,21,20,19));
     
 }
 
@@ -49,7 +56,6 @@ void handleInstruction(const String& message) {
         while(comHandler.receiveAndProcessJson(screenObjs)){
             Serial.println("NEXT");    
         }
-        Serial.println("Sucessfully extracted all");  
         display->clearDisplay();
         display->drawAllScreenObjects(screenObjs);
     }
@@ -63,6 +69,8 @@ void loop() {
         String message = Serial.readStringUntil('\n');
         handleInstruction(message);
     }
+
+    InputHandler::handleRotary(rotaryEncders,comHandler);
 
     InputHandler::handleTouch(touch,display,screenObjs,comHandler);
     

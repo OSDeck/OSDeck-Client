@@ -6,6 +6,7 @@
 #include "Arduino.h"
 #include <vector>
 #include"ScreenObject.h"
+#include "mbedtls/base64.h"
 
 class JsonParser {
     private:
