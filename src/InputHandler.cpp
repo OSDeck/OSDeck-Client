@@ -25,8 +25,8 @@ void InputHandler::handleTouch(TouchScreen* touch, Display* display, std::vector
                     }  
                 }
                 else if(objs[j].objType <= 8){//check if button Circle
-                    if (sqrt((objs[j].posX - data[i].posX) * (objs[j].posX - data[i].posX) +
-                             (objs[j].posY - data[i].posY) * (objs[j].posY - data[i].posY)) <= objs[j].sizeX)
+                    if (sqrt(((double)objs[j].posX + (double)objs[j].sizeX - (double)data[i].posX) * ((double)objs[j].posX + (double)objs[j].sizeX - (double)data[i].posX) +
+                             ((double)objs[j].posY + (double)objs[j].sizeX - (double)data[i].posY) * ((double)objs[j].posY + (double)objs[j].sizeX - (double)data[i].posY)) <= (double)objs[j].sizeX)
                     {
                         if(!objs[j].touched){
                             objs[j].touched = true;
@@ -121,14 +121,14 @@ void InputHandler::handleRotary(std::vector<RotaryEncoder>& rotarys,ComHandler& 
         if(movement != 0){
             ScreenObject obj;
             obj.globalId = rotarys[i].getId();
-            obj.value = movement;
+            obj.value = movement + 1;
             com.sendEvent(obj);
         }
 
         if(rotarys[i].isButtonPressed()){
             ScreenObject obj;
             obj.globalId = rotarys[i].getId();
-            obj.value = 2;
+            obj.value = 3;
             com.sendEvent(obj);
         }
     }

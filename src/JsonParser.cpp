@@ -62,13 +62,23 @@ void JsonParser::parseAndAddScreenObject(String& jsonString, std::vector<ScreenO
     screenObj.touched = false;  // Default value
     screenObj.ciclesSinceLastTouch = 0;  // Default value
 
-    // Optional fields
-    if (innerDoc["Properties"].containsKey("Text")) {
-        screenObj.text = innerDoc["Properties"]["Text"].as<const char*>();
-    } else {
-        screenObj.text = nullptr;
+if (innerDoc["Properties"].containsKey("Text")) {
+    const char* newText = innerDoc["Properties"]["Text"].as<const char*>();
+
+    // Freigegeben, falls vorher schon Speicher zugewiesen wurde
+    if (screenObj.text != nullptr) {
+        delete[] screenObj.text;
     }
 
+    // Allokiere Speicher für screenObj.text (einschließlich Platz für '\0')
+    screenObj.text = new char[strlen(newText) + 1];
+
+    // Kopiere den Text sicher
+    strncpy(screenObj.text, newText, strlen(newText) + 1); // +1 für das Null-Terminierungszeichen
+} else {
+    // Wenn kein Text vorhanden, setze auf nullptr
+    screenObj.text = nullptr;
+}
     if (innerDoc["Properties"].containsKey("TextSize")) {
         screenObj.textSize = innerDoc["Properties"]["TextSize"];
     } else {

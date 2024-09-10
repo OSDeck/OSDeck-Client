@@ -17,14 +17,15 @@ void Display::drawCircle(int x, int y, int radius, int color) {
   tft->fillCircle(x, y, radius, color);
 }
 
-void Display::drawText(int x, int y, int size, const char* text, int color) {
+void Display::drawText(int x, int y, int size, char* text, int color) {
   tft->setFontScale(size);
   tft->setTextColor(color);
   tft->setCursor(x, y);
   tft->print(text);
 }
 
-void Display::drawTextAutoCenter(int x, int y, int size, const char* text, int color) {
+void Display::drawTextAutoCenter(int x, int y, int size, char* text, int color) {
+  Serial.println(text);
   tft->setFontScale(size);
   tft->setTextColor(color);
   tft->setCursor(x, y,true);
@@ -70,7 +71,7 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
         drawCircle(x + radius,y + radius, radius - 2*innerSizefactorRadius, secondaryColor);
 
     }
-    void Display::drawButtonCircleWithText(int x, int y, int radius ,int textSize,int color,int secondaryColor,int textColor, const char* text, bool pressed){
+    void Display::drawButtonCircleWithText(int x, int y, int radius ,int textSize,int color,int secondaryColor,int textColor, char* text, bool pressed){
         drawCircle(x + radius, y + radius, radius , color);
 
         double innerSizefactorRadius = 0.1 * radius;
@@ -86,7 +87,7 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
     }
 
 
-    void Display::drawButtonWithText(int x, int y, int with, int height ,int textSize,int color,int secondaryColor,int textColor, const char* text, bool pressed){
+    void Display::drawButtonWithText(int x, int y, int with, int height ,int textSize,int color,int secondaryColor,int textColor, char* text, bool pressed){
         drawRectangle(x, y, with, height, color);
 
         double innerSizefactorX = 0.1 * with;
@@ -166,7 +167,7 @@ void Display::drawImage(const uint32_t* imageData, int x, int y, int width, int 
         break;
 
       case 6: //button Rectangle with Text
-        drawButtonWithText(obj.posX,obj.posY,obj.sizeX,obj.sizeY,obj.textSize,obj.color,obj.secondaryColor,obj.textColor,obj.text,obj.touched);
+          drawButtonWithText(obj.posX,obj.posY,obj.sizeX,obj.sizeY,obj.textSize,obj.color,obj.secondaryColor,obj.textColor,obj.text,obj.touched);
         break;
       
       case 7://button Circle

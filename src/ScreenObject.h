@@ -8,7 +8,7 @@ struct ScreenObject {
     int objType;
     int posX;
     int posY;
-    const char* text;
+    char* text;
     int textSize;
     int textColor;
     int sizeX;
